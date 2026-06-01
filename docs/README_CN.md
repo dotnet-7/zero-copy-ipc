@@ -391,12 +391,6 @@ MIT License - 详见 [LICENSE](../LICENSE)
 
 ---
 
-## 作者
-
-senyangcai (158119447@qq.com)
-
----
-
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
