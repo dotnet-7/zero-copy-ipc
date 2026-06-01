@@ -387,12 +387,6 @@ MIT License - See [LICENSE](LICENSE)
 
 ---
 
-## Author
-
-senyangcai (158119447@qq.com)
-
----
-
 ## Contributing
 
 Issues and Pull Requests are welcome!
