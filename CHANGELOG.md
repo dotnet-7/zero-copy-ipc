@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-03
+
+### Fixed
+- Critical bug: Header field mapping conflict causing `heap_start` calculation inconsistency
+  - `segregated_heads_size` and `heap_used` were both writing to header[6], causing data corruption
+  - Fixed by separating fields: header[6] = `heap_used`, header[7] = `segregated_heads_size`
+  - This bug caused `KeyError` when attaching to existing shared dict in same process
+  - Affected files: `memory_layout.py`, `constants.py`
+  - All 16 unit tests pass after fix
+
+### Changed
+- Updated header field mapping in `memory_layout.py`:
+  - `_create_memory`: Write `segregated_heads_size` to header[7] instead of header[6]
+  - `_attach_memory`: Read `segregated_heads_size` from header[7]
+  - `get_heap_start`: Calculate heap_start using header[7]
+  - `set_heap_used`: Clarified that it writes to header[6]
+- Updated HEADER_FORMAT comment in `constants.py` to reflect correct field mapping
+
 ## [1.0.0] - 2026-05-30
 
 ### Added
@@ -106,6 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date       | Key Changes                          |
 |---------|------------|--------------------------------------|
+| 1.0.1   | 2026-06-03 | Fixed header field mapping bug       |
 | 1.0.0   | 2026-05-30 | Initial release with O(1) performance|
 | 0.1.0   | 2026-04-11 | Pre-release with basic features     |
 
