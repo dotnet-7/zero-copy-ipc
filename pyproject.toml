@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zero-copy-ipc"
-version = "1.0.0"
+version = "1.0.1"
 description = "A pure Python zero-copy shared memory dictionary for multi-process IPC with O(1) performance"
 readme = "README.md"
 license = "MIT"

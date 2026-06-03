@@ -373,18 +373,6 @@ heap_size = estimated_items * avg_size * 3
 
 ---
 
-## 更新历史
-
-### v1.0.0 (2025-06-01)
-- ✅ Segregated Lists O(1) 内存分配器
-- ✅ 性能比 Manager().dict() 快 3倍
-- ✅ 跨平台支持（Windows/Linux/macOS）
-- ✅ 完整文档和测试
-
-详见 [CHANGELOG.md](../CHANGELOG.md)
-
----
-
 ## 许可证
 
 MIT License - 详见 [LICENSE](../LICENSE)
