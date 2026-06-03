@@ -9,7 +9,7 @@ VERSION: Final[int] = 3  # 升级版本号，支持segregated lists
 HEADER_SIZE: Final[int] = 56
 SLOT_SIZE: Final[int] = 24
 
-HEADER_FORMAT: Final[str] = "<I I Q Q Q Q Q Q"  # magic, version, slot_count, heap_size, used_slots, free_list_head, heap_used, reserved
+HEADER_FORMAT: Final[str] = "<I I Q Q Q Q Q Q"  # magic, version, slot_count, heap_size, used_slots, free_list_head, heap_used, segregated_heads_size
 HEADER_PACK = struct.Struct(HEADER_FORMAT).pack
 HEADER_UNPACK = struct.Struct(HEADER_FORMAT).unpack
 

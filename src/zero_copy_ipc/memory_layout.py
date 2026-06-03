@@ -91,7 +91,7 @@ class MemoryLayout:
         
         header = HEADER_PACK(
             MAGIC_NUMBER, VERSION, slot_count, heap_size,
-            0, 0, segregated_heads_size, 0  # reserved字段存储segregated_heads_size
+            0, 0, 0, segregated_heads_size  # heap_used=0, segregated_heads_size在reserved字段
         )
         assert self._mmap is not None
         self._mmap[0:HEADER_SIZE] = header
@@ -124,13 +124,13 @@ class MemoryLayout:
             raise ValueError(f"Unsupported version: {version}")
         
         # 计算heap_start（缓存）
-        _, _, slot_count, _, _, _, segregated_heads_size, _ = self.read_header()
+        _, _, slot_count, _, _, _, _, segregated_heads_size = self.read_header()
         self._heap_start = HEADER_SIZE + slot_count * SLOT_SIZE + segregated_heads_size
     
     def get_heap_start(self) -> int:
         """Get heap start offset (cached)."""
         if self._heap_start is None:
-            _, _, slot_count, _, _, _, segregated_heads_size, _ = self.read_header()
+            _, _, slot_count, _, _, _, _, segregated_heads_size = self.read_header()
             self._heap_start = HEADER_SIZE + slot_count * SLOT_SIZE + segregated_heads_size
         return self._heap_start
     
@@ -226,8 +226,7 @@ class MemoryLayout:
     
     def set_heap_used(self, used: int):
         """Set used heap space."""
-        # 注意：heap_used现在存储在reserved字段（索引6）
-        # 因为原来的heap_used字段被segregated_heads_size占用了
+        # heap_used存储在header[6]字段
         self.write_header(heap_used=used)
     
     # ========== Segregated Lists Operations ==========
